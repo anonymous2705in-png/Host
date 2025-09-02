@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Geetha Lakshmi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      overflow: hidden;
+    }
+    
+    /* Loading Screen */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.8s ease-out, visibility 0.8s;
+    }
+    
+    .loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    
+    .loader {
+      width: 80px;
+      height: 80px;
+      position: relative;
+    }
+    
+    .loader:before, .loader:after {
+      content: '';
+      position: absolute;
+      border: 4px solid #ff6b6b;
+      opacity: 1;
+      border-radius: 50%;
+      animation: pulsate 1.5s ease-out infinite;
+    }
+    
+    .loader:after {
+      animation-delay: 0.5s;
+    }
+    
+    @keyframes pulsate {
+      0% {
+        transform: scale(0.1);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1.2);
+        opacity: 0;
+      }
+    }
+    
+    .loading-text {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      letter-spacing: 1px;
+    }
+    
+    .progress-bar {
+      width: 250px;
+      height: 6px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 3px;
+      margin-top: 15px;
+      overflow: hidden;
+    }
+    
+    .progress {
+      height: 100%;
+      width: 0%;
+      background: #fff;
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+    
+    /* Main Content */
+    .container {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+    
+    .container.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .envelope {
+      width: 100%;
+      max-width: 500px;
+      position: relative;
+      z-index: 2;
+      margin-bottom: -50px;
+      transition: transform 0.5s ease;
+      cursor: pointer;
+    }
+    
+    .envelope:hover {
+      transform: translateY(-10px);
+    }
+    
+    .card {
+      background: #fff;
+      padding: 70px 40px 40px;
+      border-radius: 25px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      width: 100%;
+      max-width: 450px;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      border: 2px solid rgba(255, 107, 107, 0.3);
+    }
+    
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      background: linear-gradient(90deg, #ff758c, #ff7eb3, #ff9a9e, #ffb199);
+    }
+    
+    .ribbon {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      width: 110px;
+      height: 110px;
+      overflow: hidden;
+    }
+    
+    .ribbon::before {
+      content: "Special";
+      position: absolute;
+      width: 150%;
+      height: 30px;
+      background: #ff6b6b;
+      transform: rotate(45deg) translateY(20px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    h2 {
+      color: #ff6b6b;
+      margin-bottom: 15px;
+      font-size: 32px;
+      font-weight: 700;
+    }
+    
+    h3 {
+      color: #444;
+      margin-bottom: 25px;
+      font-size: 22px;
+      font-weight: 500;
+    }
+    
+    .name {
+      font-family: 'Dancing Script', cursive;
+      font-size: 32px;
+      color: #d6336c;
+      display: block;
+      margin-top: 5px;
+    }
+    
+    p {
+      color: #555;
+      font-size: 16px;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+    
+    .audio-controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 20px 0;
+    }
+    
+    .play-btn {
+      background: linear-gradient(135deg, #ff6b6b, #ff4b2b);
+      border: none;
+      color: #fff;
+      padding: 14px 35px;
+      font-size: 18px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: 0.4s;
+      box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .play-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 25px rgba(255, 107, 107, 0.4);
+    }
+    
+    .play-btn:active {
+      transform: translateY(0);
+    }
+    
+    .wave {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      margin-top: 25px;
+      height: 30px;
+      transition: opacity 0.3s;
+    }
+    
+    .bar {
+      width: 6px;
+      height: 10px;
+      background: linear-gradient(to top, #ff6b6b, #ff9a9e);
+      border-radius: 3px;
+      animation: bounce 1s infinite;
+    }
+    
+    .bar:nth-child(2) { animation-delay: 0.1s; }
+    .bar:nth-child(3) { animation-delay: 0.2s; }
+    .bar:nth-child(4) { animation-delay: 0.3s; }
+    .bar:nth-child(5) { animation-delay: 0.4s; }
+    .bar:nth-child(6) { animation-delay: 0.5s; }
+    .bar:nth-child(7) { animation-delay: 0.6s; }
+    
+    @keyframes bounce {
+      0%, 100% { height: 10px; }
+      50% { height: 30px; }
+    }
+    
+    .wave.hidden {
+      opacity: 0;
+      height: 0;
+      margin: 0;
+    }
+    
+    .progress-container {
+      width: 100%;
+      height: 6px;
+      background: #f0f0f0;
+      border-radius: 3px;
+      margin-top: 20px;
+      overflow: hidden;
+      display: none;
+    }
+    
+    .progress-bar-audio {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(to right, #ff9a9e, #ff6b6b);
+      border-radius: 3px;
+      transition: width 0.1s linear;
+    }
+    
+    .message {
+      margin-top: 30px;
+      padding: 15px;
+      background: #fff8f8;
+      border-radius: 15px;
+      border-left: 4px solid #ff6b6b;
+    }
+    
+    .confetti {
+      position: fixed;
+      width: 15px;
+      height: 15px;
+      opacity: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+    
+    .birthday-cake {
+      font-size: 40px;
+      margin: 15px 0;
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @media (max-width: 500px) {
+      .card {
+        padding: 60px 25px 30px;
+      }
+      
+      h2 {
+        font-size: 28px;
+      }
+      
+      h3 {
+        font-size: 20px;
+      }
+      
+      .name {
+        font-size: 28px;
+      }
+      
+      .play-btn {
+        padding: 12px 30px;
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loader"></div>
+    <div class="loading-text">Loading your special birthday wish...</div>
+    <div class="progress-bar">
+      <div class="progress" id="loadingProgress"></div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container" id="mainContainer">
+    <div class="envelope">
+      <i class="fas fa-envelope-open-text" style="font-size: 80px; color: #ff6b6b;"></i>
+    </div>
+    
+    <div class="card">
+      <div class="ribbon"></div>
+      
+      <div class="birthday-cake">🎂</div>
+      
+      <h2>Happy Birthday <i class="fas fa-gift" style="color: #ff6b6b;"></i></h2>
+      <h3>To: <span class="name">Geetha Lakshmi</span></h3>
+      
+      <p>Wishing you a day filled with happiness and a year filled with joy. May your special day be as wonderful as you are!</p>
+      
+      <div class="audio-controls">
+        <button id="playBtn" class="play-btn">
+          <i class="fas fa-play"></i> Play Your Special Message
+        </button>
+        
+        <div class="progress-container" id="progressContainer">
+          <div class="progress-bar-audio" id="progressBar"></div>
+        </div>
+        
+        <div class="wave" id="waveAnim">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+      </div>
+      
+      <div class="message">
+        <p><i class="fas fa-quote-left" style="color: #ff6b6b;"></i> This audio message was made with love for your special day. <i class="fas fa-heart" style="color: #ff6b6b;"></i></p>
+      </div>
+    </div>
+  </div>
+
+  <audio id="giftAudio" 
+    src="https://github.com/aaaa72705-design/Ghost/raw/refs/heads/main/AUD-20250902-WA0015.mp3">
+  </audio>
+
+  <script>
+    // Simulate loading process
+    const loadingScreen = document.getElementById('loadingScreen');
+    const mainContainer = document.getElementById('mainContainer');
+    const loadingProgress = document.getElementById('loadingProgress');
+    const playBtn = document.getElementById("playBtn");
+    const audio = document.getElementById("giftAudio");
+    const wave = document.getElementById("waveAnim");
+    const progressContainer = document.getElementById("progressContainer");
+    const progressBar = document.getElementById("progressBar");
+    const envelope = document.querySelector('.envelope');
+    
+    // Simulate loading progress
+    let progress = 0;
+    const loadingInterval = setInterval(() => {
+      progress += Math.random() * 10;
+      if (progress >= 100) {
+        progress = 100;
+        clearInterval(loadingInterval);
+        
+        // Hide loading screen and show main content
+        setTimeout(() => {
+          loadingScreen.classList.add('hidden');
+          mainContainer.classList.add('visible');
+        }, 500);
+      }
+      loadingProgress.style.width = `${progress}%`;
+    }, 200);
+    
+    // Create confetti
+    function createConfetti() {
+      const colors = ['#ff6b6b', '#ff9a9e', '#ff7eb3', '#ff758c', '#ffb199'];
+      
+      for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animation = `fall ${Math.random() * 3 + 2}s linear forwards`;
+        
+        document.body.appendChild(confetti);
+        
+        // Animation for falling confetti
+        const keyframes = `
+          @keyframes fall {
+            0% {
+              transform: translateY(-10px) rotate(0deg);
+              opacity: 1;
+            }
+            100% {
+              transform: translateY(100vh) rotate(${Math.random() * 360}deg);
+              opacity: 0;
+            }
+          }
+        `;
+        
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = keyframes;
+        document.head.appendChild(styleSheet);
+      }
+    }
+    
+    // Update progress bar
+    audio.addEventListener('timeupdate', () => {
+      const percent = (audio.currentTime / audio.duration) * 100;
+      progressBar.style.width = `${percent}%`;
+    });
+    
+    playBtn.addEventListener("click", () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '<i class="fas fa-pause"></i> Pause Message';
+        wave.classList.remove("hidden");
+        progressContainer.style.display = "block";
+        createConfetti();
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '<i class="fas fa-play"></i> Continue Playing';
+        wave.classList.add("hidden");
+      }
+    });
+    
+    audio.addEventListener("ended", () => {
+      playBtn.innerHTML = '<i class="fas fa-play"></i> Play Again';
+      wave.classList.add("hidden");
+      progressContainer.style.display = "none";
+    });
+    
+    // Envelope animation
+    envelope.addEventListener('click', createConfetti);
+  </script>
+</body>
+</html>
